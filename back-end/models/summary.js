@@ -5,7 +5,7 @@ const summarySchema= new Schema({
         type:String,
         required:true,
         trim: true,
-        maxLength: 50
+        maxLength: 100
     },
     summary:{
         type:String,

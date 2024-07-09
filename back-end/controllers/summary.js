@@ -4,7 +4,7 @@ import runSummary from "../gemini/toolkit/gemini-summary.js"
 export const generateSummary = async (req, res) => {
     const text = req.body.text;
     const wordCount = parseInt(req.body.count);
-    const prompt = `I want the summary of the following text in around ${wordCount} words and also provide a suitable title for this text. Title must not exceed 50 characters.: \n${text}`;
+    const prompt = `I want the summary of the following text in around ${wordCount} words and also provide a suitable title for this text. Title must not exceed 100 characters.: \n${text}`;
     console.log(prompt)
     try {
         const response = await runSummary(prompt); //--->raw response

@@ -7,7 +7,7 @@ export const generateWriting = async (req, res) => {
     let prompt
     if (category === 'Article' || category === 'Essay') {
         const wordCount = parseInt(req.body.count);
-        prompt = `I want a ${category} on ${context} in around ${wordCount} words and also provide a suitable title for it. Title must not exceed 50 characters.`;
+        prompt = `I want a ${category} on ${context} in around ${wordCount} words and also provide a suitable title for it. Title must not exceed 100 characters.`;
     }
     else if (category === 'Debate') {
         const motion = req.body.motion;
@@ -18,21 +18,21 @@ export const generateWriting = async (req, res) => {
         } else if (motion === 'against') {
             debateType = 'opposing';
         }
-        prompt = `I want a debate ${debateType} ${context} in around ${wordCount} words and also provide a suitable title for it. Title must not exceed 50 characters.`;
+        prompt = `I want a debate ${debateType} ${context} in around ${wordCount} words and also provide a suitable title for it. Title must not exceed 100 characters.`;
     }
     else {
         const genre = req.body.genre;
         if (category === 'Play') {
             const wordCount = parseInt(req.body.count);
-            prompt = `I want a play about ${context} in around ${wordCount} words and also provide a suitable title for it. Title must not exceed 50 characters. Specified Genre: ${genre}. Provide a proper introduction, dialogues and proper narration in between scenes.`;
+            prompt = `I want a play about ${context} in around ${wordCount} words and also provide a suitable title for it. Title must not exceed 100 characters. Specified Genre: ${genre}. Provide a proper introduction, dialogues and proper narration in between scenes.`;
         }
         else {
             if (category === 'Poem') {
-                prompt = `I want a ${category} about ${context} and also provide a suitable title for it. Title must not exceed 50 characters. Specified Genre: ${genre}`;
+                prompt = `I want a ${category} about ${context} and also provide a suitable title for it. Title must not exceed 100 characters. Specified Genre: ${genre}`;
             }
             else {
                 const wordCount = parseInt(req.body.count);
-                prompt = `I want a ${category} about ${context} in around ${wordCount} words and also provide a suitable title for it. Title must not exceed 50 characters. Specified Genre: ${genre}`;
+                prompt = `I want a ${category} about ${context} in around ${wordCount} words and also provide a suitable title for it. Title must not exceed 100 characters. Specified Genre: ${genre}`;
             }
         }
     }
