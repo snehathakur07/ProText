@@ -1,11 +1,11 @@
 
 import { GoogleGenerativeAI } from "@google/generative-ai";
-import { FunctionDeclarationSchemaType} from '@google/generative-ai' ;
+import { FunctionDeclarationSchemaType } from '@google/generative-ai';
 
 import dotenv from "dotenv"
 dotenv.config();
 
-const apiKey=process.env.API_KEY
+const apiKey = process.env.API_KEY
 const genAI = new GoogleGenerativeAI(apiKey);
 
 //for summary
@@ -21,7 +21,7 @@ let model = genAI.getGenerativeModel({
           title: {
             type: FunctionDeclarationSchemaType.STRING,
           },
-          summary:{
+          summary: {
             type: FunctionDeclarationSchemaType.STRING,
           },
         },
@@ -31,9 +31,9 @@ let model = genAI.getGenerativeModel({
 });
 
 
-async function runSummary(prompt){
+async function runSummary(prompt) {
   const result = await model.generateContent(prompt)
-  const response=result.response;
-  return response.text(); 
+  const response = result.response;
+  return response.text();
 }
 export default runSummary;

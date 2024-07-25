@@ -19,7 +19,10 @@ let model = genAI.getGenerativeModel({
       items: {
         type: FunctionDeclarationSchemaType.OBJECT,
         properties: {
-          paraphrased:{
+          title: {
+            type: FunctionDeclarationSchemaType.STRING,
+          },
+          paraphrased: {
             type: FunctionDeclarationSchemaType.STRING,
           },
         },

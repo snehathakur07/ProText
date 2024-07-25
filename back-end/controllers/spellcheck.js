@@ -2,16 +2,19 @@ import runSpellCheck from "../gemini/toolkit/gemini-spellcheck.js"
 
 export const Spellcheck = async (req, res) => {
     const text = req.body.text;
-    const prompt = `Run a spell check on the following text and return it with corrected spellings. If there are no spelling mistakes, return as it is. Also capitalize the first letter of the sentence. :\n ${text}`;
+    const prompt = `Please perform a spell check on the following text and return it with all spelling errors corrected. If there are no spelling mistakes, return the text unchanged. Additionally, ensure proper capitalizations. The formatting, including spacing, highlights, bold phrases, etc., should be preserved. 
+
+    The text to be checked is as follows: \n${text}.
+    `
     console.log(prompt)
     try {
         const response = await runSpellCheck(prompt); //--->raw response
         const parsedResponse = JSON.parse(response) //--->parsed response
         console.log(parsedResponse)
-        if (parsedResponse && parsedResponse.length >= 1) {
+        if (parsedResponse) {
 
             const corrected = parsedResponse[0].corrected;
-            
+            console.log(corrected)
             res.status(200).json(corrected);
         }
         else {

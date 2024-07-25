@@ -1,0 +1,64 @@
+.prompt {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.bar {
+    display: flex;
+    background: #f0f4f8;
+    padding: 1rem 1.7rem;
+    justify-content: space-between;
+    border-radius: 50px;
+    box-shadow: 0px 5px 20px rgba(0, 0, 0, 0.199);
+    width: 100%;
+}
+
+textarea {
+    text-align: justify;
+    border: none;
+    background: #f0f4f8;
+    outline: none;
+    font-size: 1.3rem;
+    padding: 0 .5rem;
+    white-space: pre-wrap;
+    overflow-wrap:anywhere;
+    resize: none; /* Prevent manual resizing */
+    width: 80%;
+    max-height: 200px; /* Set maximum height */
+    overflow-y: hidden; /* Prevent vertical scroll until max height is reached */
+}
+
+textarea:focus {
+    border: none;
+}
+
+.btn {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}
+
+select {
+    border: none;
+    background: none;
+    font-size: 1.2rem;
+    outline: none;
+}
+
+.btns {
+    display: flex;
+    gap: 1rem;
+}
+
+@media (max-width: 600px) {
+    .bar {
+        width: 100vw !important;
+    }
+
+    textarea {
+        width: 80vw;
+    }
+}

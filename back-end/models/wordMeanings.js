@@ -9,9 +9,26 @@ const wordSchema= new Schema({
         type:String,
         required:true
     },
+    synonyms: {
+        type: [{
+            type: String,
+            maxlength: 50 
+        }],
+        validate: [arrayLimit, '{PATH} exceeds the limit of 5'] 
+    },
+    antonyms: {
+        type: [{
+            type: String,
+            maxlength: 50  
+        }],
+        validate: [arrayLimit, '{PATH} exceeds the limit of 5'] 
+    },
     example:{
         type:String,
         required:true
     }
 },{timestamps:true});
+function arrayLimit(val) {
+    return val.length <= 5;
+}
 export default mongoose.model('wordMeanings', wordSchema);

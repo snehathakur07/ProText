@@ -1,0 +1,156 @@
+/* main blue #04102b */
+/* light blue #55bbf5 */
+* {
+  text-wrap: nowrap;
+}
+
+navbar {
+  display: flex;
+  flex-direction: column;
+  padding-top: 2rem;
+
+  .btn-nav {
+    display: flex;
+    flex-direction: row-reverse;
+  }
+
+  .btn-nav span {
+    width: fit-content;
+    font-size: 2.5rem;
+    display: flex;
+    flex-direction: row-reverse;
+    margin-right: 1rem;
+    transition: all 0.3s ease-in-out;
+    /* color: #fff; */
+    /* color: #04102b; */
+  }
+}
+
+.btn-nav,
+li {
+  cursor: pointer;
+}
+
+.btn-nav span:hover {
+  transform: scale(0.8);
+}
+
+.nav {
+  background: #e3e6f6;
+  /* background:#d4d9f8; */
+  /* background: #a2b0f0; */
+  /* background: #CCC9E7; */
+  width: 20rem;
+  height: 100vh;
+  transition: all 0.7s ease-in-out;
+  overflow: hidden;
+  position: relative;
+  z-index: 2;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.526);
+
+  p,
+  h3 {
+    transition: all 0.7s ease-in-out;
+  }
+
+}
+
+
+
+.minimize {
+  width: 6.5rem;
+
+  .btn-nav,
+  .title {
+    /* display: none; */
+    opacity: 0;
+  }
+
+  p,
+  h3 {
+    opacity: 0;
+  }
+
+  .top {
+    /* padding-top: 2rem; */
+    margin-left: 6.4rem;
+
+    h3 {
+      overflow: hidden;
+    }
+  }
+
+  li {
+    padding: 0;
+    align-items: flex-start;
+
+    &:hover {
+      background: none !important;
+    }
+  }
+}
+
+.navbar-container {
+  padding: 1rem 1.5rem 1.5rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+hr {
+  opacity: 0.7;
+  border: 1px solid rgba(0, 0, 0, 0.695);
+}
+
+.top {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+}
+
+.toolkit,
+.creative-writing {
+  .title {
+    font-weight: 500;
+  }
+
+  padding: 2rem 0rem;
+  display: grid;
+  gap: 1rem;
+
+  ul {
+    display: flex;
+    flex-direction: column;
+
+    li {
+      display: flex;
+      gap: 1rem;
+      align-items: center;
+      padding: 1rem 1.2rem;
+      border-radius: 20px;
+
+      span {
+        font-size: 1.6rem;
+        /* color: #fff; */
+      }
+
+      &:hover {
+        background: linear-gradient(45deg, #c1c8f7, #9da3ca);
+      }
+
+      p {
+        font-weight: 500;
+      }
+    }
+  }
+}
+
+.creative-writing {
+  /* margin-top: 0.4rem; */
+}
+
+.toolkit,
+.creative-writing ul li {
+  transition: background 1s ease;
+}

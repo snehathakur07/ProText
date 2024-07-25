@@ -9,7 +9,7 @@ const genAI = new GoogleGenerativeAI(apiKey);
 
 // for word meanings
 
-let model = genAI.getGenerativeModel({
+const model = genAI.getGenerativeModel({
   model: "gemini-1.5-pro",
   generationConfig: {
     responseMimeType: "application/json",
@@ -18,21 +18,33 @@ let model = genAI.getGenerativeModel({
       items: {
         type: FunctionDeclarationSchemaType.OBJECT,
         properties: {
-          word:{
+          word: {
             type: FunctionDeclarationSchemaType.STRING,
           },
-          meaning:{
+          meaning: {
             type: FunctionDeclarationSchemaType.STRING,
           },
-          example:{
+          synonyms: {
+            type: FunctionDeclarationSchemaType.ARRAY,  // Ensure this is defined correctly
+            items: {
+              type: FunctionDeclarationSchemaType.STRING,
+            },
+          },
+          antonyms: {
+            type: FunctionDeclarationSchemaType.ARRAY,  // Ensure this is defined correctly
+            items: {
+              type: FunctionDeclarationSchemaType.STRING,
+            },
+          },
+          example: {
             type: FunctionDeclarationSchemaType.STRING,
           },
-
         },
       },
     },
-  }
+  },
 });
+
 
 
 async function runMeanings(prompt){

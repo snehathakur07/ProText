@@ -3,7 +3,7 @@ import run from "../gemini/creative-writing/gemini-quote-caption.js"
 export const generate = (type) => async (req, res) => {
     const context = req.body.context
     let prompt;
-    if (context === 'Caption') {
+    if (type === 'Caption') {
         prompt = `Generate a caption for my post on social media. Context: ${context}`;
     }
     else {

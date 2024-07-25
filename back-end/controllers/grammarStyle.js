@@ -2,7 +2,11 @@ import runGrammarStyleChecks from "../gemini/toolkit/gemini-grammar-style.js"
 
 export const improveGrammarandStyle = async (req, res) => {
     const text = req.body.text;
-    const prompt = `Perform a grammar and style check on the following text. Provide concise suggestions to improve clarity, coherence, and adherence to grammatical rules and to improve the overall tone of the text. Provide suggestions like you're talking to the user. Be short with the suggestions. If there are grammatical errors, don't suggest the replacement for each and every mistake, just say that there are a few grammatical errors and they could be improved. If the style or tone of the text can be improved, suggest how in short. Don't include examples in the suggestions. Provide an example which incorporates those suggestions into the given text:\n${text}`;
+    const prompt = `Perform a grammar and style check on the following text. Provide concise suggestions for each and every grammatical mistake and improvement in clarity, coherence, and overall tone. Present your suggestions in bullet points, and provide them as if you are directly communicating with the user. Be brief but specific with each suggestion. For grammatical errors, point out each mistake and offer a specific suggestion for correction. For style or tone improvements, suggest specific changes to enhance the text.
+    Include an example that incorporates all of your suggestions into the given text. Don't include any title, neither in suggestions nor in example. Don't even say this "Grammar and Style Suggestions:"
+    The formatting, including spacing, highlights, bold phrases, etc., should be preserved. Provide suggestions regarding formatting as well.
+    Ensure that the example is not included in the suggestions.
+    Text: \n${text}`;
 
 
     console.log(prompt)
@@ -10,14 +14,16 @@ export const improveGrammarandStyle = async (req, res) => {
         const response = await runGrammarStyleChecks(prompt); //--->raw response
         const parsedResponse = JSON.parse(response) //--->parsed response
         console.log(parsedResponse)
-        if (parsedResponse && parsedResponse.length >= 2) {
-
+        if (parsedResponse) {
+            console.log("inside if")
             const suggestions = parsedResponse[0].suggestions;
-            const example = parsedResponse[1].example;
+            const example = parsedResponse[0].example;
             const result={
                 suggestions,
                 example
             }
+            console.log("bro")
+            console.log(result)
             res.status(200).json(result);
         }
         else {
