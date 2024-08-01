@@ -10,12 +10,16 @@
     }
     position:relative;
     /* flex-direction: column; */
+    background: #212121;
 }
 .top{
     position:absolute;
     top:2%;
     left:3%;
-    
+    color:#ececec;
+    h3{
+        font-weight:300;
+    }
 }
 .acc{
     display:flex;
@@ -84,7 +88,7 @@
 }
 
 .name {
-    font-size: 4rem;
+    font-size: 4.6rem;
     /* text-shadow: 0 0 100px #CCC9E7; */
     h1{
         /* font-style: italic; */
@@ -100,16 +104,21 @@
     gap:2rem;
 }
 .introo{
+    /* width:fit-content; */
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    text-align: left;
     background-repeat: no-repeat;
     background-position: center;
     /* background-size:50%; */
     /* background-size: ; */
-    
+    padding:7rem 10rem;
     height:100%;
+    color:#ececec;
+    /* color:white; */
+    
 }
 .sub-text {
     font-size: 1.5rem;
@@ -118,10 +127,12 @@
         position:relative;
         width:fit-content;
         &::before{
+            
             content:'';
             height:2px;
             width:6%;
-            background: black;
+            /* background: black; */
+            background-color: #ececec;
             position:absolute;
             top:50%;
             left:-10%;
@@ -130,7 +141,8 @@
             content:'';
             height:2px;
             width:6%;
-            background: black;
+            /* background: black; */
+            background-color: #ececec;
             position:absolute;
             top:50%;
             right:-10%;
@@ -152,10 +164,10 @@
 
 .button {
     padding-top:2rem;
-    align-self: center;
+    /* align-self: center; */
     display: flex;
-    justify-content: center;
-    align-items: center;
+    /* justify-content: center; */
+    /* align-items: center; */
     .btn {        
         color: white;
         text-transform: uppercase;

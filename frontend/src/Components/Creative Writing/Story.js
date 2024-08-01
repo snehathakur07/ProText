@@ -109,7 +109,7 @@ export default function Story() {
                                                 <option value="dystopian">Dystopian</option>
                                                 <option value="literary-fiction">Literary Fiction</option>
                                                 <option value="young-adult">Young Adult</option>
-                                                <option value="children">Children’s Fiction</option>
+                                                <option value="children">Children's Fiction</option>
                                             </select>
 
                                         </div>
@@ -126,7 +126,7 @@ export default function Story() {
                                             </select>
                                         </div>
                                         <div className="btn" onClick={handleSend}>
-                                            <img src={send_icon} alt="send" width="30" />
+                                        {send_icon} 
                                         </div>
                                     </div>
                                 </div>

@@ -4,15 +4,15 @@ import { assets } from '../../asset/asset';
 import { Link } from 'react-router-dom';
 import Top from '../top.js'
 export default function Main() {
-    const { hands } = assets;
+    const { hands,bg } = assets;
 
     return (
         <div className='main'
-        // style={{ backgroundImage: `url(${newbg})` }}
+        // style={{ backgroundImage: `url(${bg})` }}
 
         >
             {/* <div className="overlay"
-            style={{ backgroundImage: `url(${bot})`}}
+            // style={{ backgroundImage: `url(${bot})`}}
             ></div> */}
 
 
@@ -35,7 +35,7 @@ export default function Main() {
                 </div> */}
                 <div className=" introo
                 "
-                style={{ backgroundImage: `url(${hands})`}}
+                // style={{ backgroundImage: `url(${hands})`}}
                 >
 
                     <div className="name">
@@ -53,7 +53,7 @@ export default function Main() {
                 </div>
             </div>
             {/* <div className="bg">
-                <img src={bot} alt="background" width="500" />
+                <img src={bg} alt="background" width="500" />
             </div> */}
         </div>
 

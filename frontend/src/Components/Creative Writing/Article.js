@@ -89,17 +89,18 @@ export default function Article() {
                                         <div className="btn">
                                             <select name="word-limit" id="wordlimit" onChange={handleWordLimitChange} value={wordLimit}>
                                                 <option value="wordlimit" disabled>Word Limit</option>
-                                                <option value="50">&lt; 100</option>
-                                                <option value="100">100</option>
                                                 <option value="200">200</option>
                                                 <option value="300">300</option>
                                                 <option value="400">400</option>
                                                 <option value="500">500</option>
-                                                <option value="750">&gt; 500</option>
+                                                <option value="1000">1000</option>
+                                                <option value="1500">1500</option>
+                                                <option value="2000">2000</option>
+                                                
                                             </select>
                                         </div>
                                         <div className="btn" onClick={handleSend}>
-                                            <img src={send_icon} alt="send" width="30" />
+                                            {send_icon} 
                                         </div>
                                     </div>
                                 </div>

@@ -1,7 +1,12 @@
 import logo from './logoo.jpeg'
-import send_icon from './send_icon.png'
+// import send_icon from './send_icon.png'
 import bot from './bot.png'
 import hands from './hands.jpeg'
+import bg from './bg.png'
+const send_icon=<span class="material-symbols-outlined">
+send
+</span>
+
 const arrow_left = <span className="material-symbols-outlined">
     arrow_circle_left
 </span>
@@ -55,5 +60,6 @@ export const assets = {
     send_icon,
     bot,
     hands,
-    logo
+    logo,
+    bg
 }

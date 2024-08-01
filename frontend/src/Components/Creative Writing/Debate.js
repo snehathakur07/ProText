@@ -98,7 +98,7 @@ export default function Debate() {
                                         </div>
                                     </div>
                                     <div className="btn" onClick={handleSend}>
-                                        <img src={send_icon} alt="send" width="30" />
+                                    {send_icon} 
                                     </div>
                                 </div>
                             </div>

@@ -52,12 +52,15 @@
     h3{
         font-style: italic;
         font-family: 'Playfair Display';
-        font-size:1.5rem;
+        font-size:1.3rem;
         font-weight:100;
+        /* text-transform: lowercase; */
     }
+    
 }
 .inner-summ{
-    background:#e3e6f6;
+    /* background:#2f2f2f; */
+    /* background:#ccedfa; */
     /* background:#ccc9e75f; */
     /* background: rgba(255, 255, 255, 0.29); */
     width:60%;

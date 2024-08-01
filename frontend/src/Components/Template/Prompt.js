@@ -49,7 +49,9 @@ export default function Prompt(props) {
                     {prompt === "" ? null : (
                         <div className="btn"
                         // onClick={() => sendPrompt(prompt)}
-                        ><img src={send_icon} alt="send" width="30" />
+                        >
+                            {send_icon}
+                            {/* <img src={send_icon} alt="send" width="30" /> */}
                         </div>
 
                     )}

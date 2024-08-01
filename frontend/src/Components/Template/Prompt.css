@@ -7,7 +7,8 @@
 
 .bar {
     display: flex;
-    background: #f0f4f8;
+    background:#2f2f2f;
+    /* background: #f0f4f8; */
     padding: 1rem 1.7rem;
     justify-content: space-between;
     border-radius: 50px;
@@ -18,7 +19,7 @@
 textarea {
     text-align: justify;
     border: none;
-    background: #f0f4f8;
+    background:inherit;
     outline: none;
     font-size: 1.3rem;
     padding: 0 .5rem;
@@ -39,6 +40,10 @@ textarea:focus {
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    span{
+        font-size:2.4rem;
+        font-weight:300;
+    }
 }
 
 select {
@@ -46,11 +51,16 @@ select {
     background: none;
     font-size: 1.2rem;
     outline: none;
+    font-weight:200;
+    option{
+        color:black;
+    }
 }
 
 .btns {
     display: flex;
     gap: 1rem;
+    
 }
 
 @media (max-width: 600px) {

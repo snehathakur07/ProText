@@ -5,7 +5,7 @@
   list-style-type: none;
   /* font-family:"Rubik", sans-serif; */
   font-family: "Poppins", sans-serif;
-  
+  color:#ececec;
 }
 
 .app{
@@ -18,7 +18,8 @@
   display: none;
 }
 a{
-  color:black;
+  /* color:black; */
+  color:#ececec;
   text-decoration: none;
 }
 .main{

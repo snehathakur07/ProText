@@ -1,4 +1,4 @@
-import React, { createContext, createElement, useContext, useState } from "react";
+import React, { useContext, useState } from "react";
 import axios from "axios"
 const BASE_URL1 = "http://localhost:5000/api/writing-toolkit/";
 const BASE_URL2 = "http://localhost:5000/api/creative-writing/";
@@ -163,13 +163,14 @@ export const GlobalProvider = ({ children }) => {
     })
 
     const addArticle = async (prompt) => {
+        console.log("article")
         setLoading(true);
         setArticlePrompt({
             category: "Article",
             context: "",
             wordLimit: ""
         })
-        const response = await axios.post(`${BASE_URL1}`, prompt)
+        const response = await axios.post(`${BASE_URL2}`, prompt)
             .catch((err) => {
                 console.log(err)
             })
@@ -201,7 +202,7 @@ export const GlobalProvider = ({ children }) => {
             context: "",
             wordLimit: ""
         })
-        const response = await axios.post(`${BASE_URL1}`, prompt)
+        const response = await axios.post(`${BASE_URL2}`, prompt)
             .catch((err) => {
                 console.log(err)
             })
@@ -236,7 +237,7 @@ export const GlobalProvider = ({ children }) => {
             wordLimit: "",
             genre:""
         })
-        const response = await axios.post(`${BASE_URL1}`, prompt)
+        const response = await axios.post(`${BASE_URL2}`, prompt)
             .catch((err) => {
                 console.log(err)
             })
@@ -269,7 +270,7 @@ export const GlobalProvider = ({ children }) => {
             context: "",
             genre:""
         })
-        const response = await axios.post(`${BASE_URL1}`, prompt)
+        const response = await axios.post(`${BASE_URL2}`, prompt)
             .catch((err) => {
                 console.log(err)
             })
@@ -302,7 +303,7 @@ export const GlobalProvider = ({ children }) => {
             context: "",
             genre:""
         })
-        const response = await axios.post(`${BASE_URL1}`, prompt)
+        const response = await axios.post(`${BASE_URL2}`, prompt)
             .catch((err) => {
                 console.log(err)
             })
@@ -337,7 +338,7 @@ export const GlobalProvider = ({ children }) => {
             genre:"",
             motion:""
         })
-        const response = await axios.post(`${BASE_URL1}`, prompt)
+        const response = await axios.post(`${BASE_URL2}`, prompt)
             .catch((err) => {
                 console.log(err)
             })
@@ -355,13 +356,20 @@ export const GlobalProvider = ({ children }) => {
     const formatText = (text) => {
         if (!text) return "";
         let formattedText = text.replace(/\n/g, '<br/>');
-        formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-        formattedText = formattedText.replace(/\*/g, '<br/>');
-        formattedText = formattedText.replace(/(\+ .+)/g, '<li>$1</li>');
-        formattedText = formattedText.replace(/(<li>.*<\/li>)/g, '<ul>$1</ul>');
-        formattedText = formattedText.replace(/<\/ul>\s*<ul>/g, '');
+        formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Bold text
+        formattedText = formattedText.replace(/\*/g, '<br/>'); // Line breaks
+        formattedText = formattedText.replace(/(\+ .+)/g, '<li>$1</li>'); // List items
+        formattedText = formattedText.replace(/(<li>.*<\/li>)/g, '<ul>$1</ul>'); // Wrap list items in <ul>
+        formattedText = formattedText.replace(/<\/ul>\s*<ul>/g, ''); // Merge consecutive <ul> elements
+    
+        // Add formatting for headers
+        formattedText = formattedText.replace(/### (.*?)<br\/>/g, '<h3>$1</h3>'); // H3 headers
+        formattedText = formattedText.replace(/## (.*?)<br\/>/g, '<h2>$1</h2>'); // H2 headers
+        formattedText = formattedText.replace(/# (.*?)<br\/>/g, '<h1>$1</h1>'); // H1 headers
+    
         return formattedText;
     };
+    
 
 
 
