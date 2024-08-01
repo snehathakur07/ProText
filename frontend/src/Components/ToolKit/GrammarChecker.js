@@ -1,20 +1,25 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 
-import Filler from "../../Template/Filler";
-import { assets } from "../../../asset/asset";
-import { useGlobalContext } from '../../../Context/GlobalContext';
-import '../../Template/template.css'
-import '../../Template/Prompt.css'
-import Top from '../../top'
+import Filler from "../Template/Filler";
+import { assets } from "../../asset/asset";
+import TypingEffect from "../../Context/TypingEffect"
+import { useGlobalContext } from '../../Context/GlobalContext';
+import '../Template/template.css'
+import '../Template/Prompt.css'
+import Top from '../top'
 
-export default function SpellChecker() {
-    const { spellCheckPrompt, setSpellCheckPrompt, addSpellCheck, spellCheckResponse, formatText, loading } = useGlobalContext();
+export default function GrammarChecker() {
+    const { grammarCheckPrompt,
+        setGrammarCheckPrompt,
+        grammarCheckResponse,
+        addGrammarCheck, formatText, loading } = useGlobalContext();
     const textareaRef = useRef(null);
 
     const handleTextChange = (event) => {
-        setSpellCheckPrompt({ ...spellCheckPrompt, text: event.target.value });
+        setGrammarCheckPrompt({ ...grammarCheckPrompt, text: event.target.value });
         autoResizeTextarea();
     };
+
 
     const autoResizeTextarea = () => {
         const textarea = textareaRef.current;
@@ -26,7 +31,7 @@ export default function SpellChecker() {
     };
 
     const handleSend = async () => {
-        await addSpellCheck(spellCheckPrompt);
+        await addGrammarCheck(grammarCheckPrompt);
         
         resetTextareaHeight();
     };
@@ -41,9 +46,9 @@ export default function SpellChecker() {
 
     useEffect(() => {
         autoResizeTextarea();
-    }, [spellCheckPrompt.text]);
+    }, [grammarCheckPrompt.text]);
 
-    const { send_icon } = assets;
+    const { send_icon,loader } = assets;
 
     return (
         <div className='main tools spell'>
@@ -51,18 +56,27 @@ export default function SpellChecker() {
                 <div className="summarizer-con">
                     <Top/>
                     <div className="upper-summ">
-                        <div className="title-summ"><h1>SpellChecker </h1></div>
-                        <div className="sub-title-summ"><h3>Fix Typos and Misspellings Swiftly</h3></div>
+                        <div className="title-summ"><h1>Grammar & Style Checker </h1></div>
+                        <div className="sub-title-summ"><h3>Polish your Prose to Perfection</h3></div>
                     </div>
                     <div className="inner-summ">
                         <div className="display">
-                            {loading ? "hello"
-                                : spellCheckResponse.corrected === "" ?
-                                    <Filler text="Receive a polished version of your text, corrected for any spelling issues." />
+                            {loading === true ? loader
+                                :
+                                (grammarCheckResponse.suggestions === "" && grammarCheckResponse.example==="") ?
+                                    <Filler text="Receive tailored suggestions and an improved version of your text for flawless writing." />
                                     :
                                     <div className="response">
-                                        <div><h3>Corrected Version</h3></div>
-                                        <p><div className="summary-content" dangerouslySetInnerHTML={{ __html: formatText(spellCheckResponse.corrected) }} /></p>
+                                        <div><h3>Suggestions</h3></div>
+                                        <p>
+                                        <TypingEffect text={grammarCheckResponse.suggestions} />
+                                        </p>
+                                        <div><h3>Example</h3></div>
+                                        <p>
+                                        <TypingEffect text={grammarCheckResponse.example} />
+                                            
+                                        </p>
+                                        
                                     </div>
                             }
                         </div>
@@ -73,13 +87,13 @@ export default function SpellChecker() {
                                         id="text-input"
                                         placeholder="Paste your text here"
                                         onChange={handleTextChange}
-                                        value={spellCheckPrompt.text}
+                                        value={grammarCheckPrompt.text}
                                         ref={textareaRef}
                                         rows="1"
                                     ></textarea>
                                     <div className="btns" style={{ display: "flex !important" }}>
                                         <div className="btn" onClick={handleSend}>
-                                            {send_icon}
+                                        {send_icon} 
                                         </div>
                                     </div>
                                 </div>
@@ -89,5 +103,5 @@ export default function SpellChecker() {
                 </div>
             </div>
         </div>
-    );
+    )
 }

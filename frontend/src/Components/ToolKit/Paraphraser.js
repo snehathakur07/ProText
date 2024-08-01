@@ -1,11 +1,12 @@
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect, useRef, useState } from 'react';
 
-import Filler from "../../Template/Filler"
-import { assets } from "../../../asset/asset"
-import { useGlobalContext } from '../../../Context/GlobalContext';
-import '../../Template/template.css'
-import '../../Template/Prompt.css'
-import Top from '../../top'
+import Filler from "../Template/Filler";
+import { assets } from "../../asset/asset";
+import { useGlobalContext } from '../../Context/GlobalContext';
+import '../Template/template.css'
+import '../Template/Prompt.css'
+import Top from '../top'
+import Response from "../Response"
 
 export default function Paraphraser() {
     const { paraphrasePrompt, setParaphrasePrompt, addParaphrase, paraphraseResponse, formatText, loading } = useGlobalContext();
@@ -48,7 +49,7 @@ export default function Paraphraser() {
     }, [paraphrasePrompt.text]);
 
 
-    const { send_icon } = assets;
+    const { send_icon,loader } = assets;
 
     return (
         <div className='main tools'>
@@ -61,16 +62,14 @@ export default function Paraphraser() {
                     </div>
                     <div className="inner-summ">
                         <div className="display">
-                            {loading === true ? "hello"
+                            {loading === true ? loader
                                 :
 
                                 paraphraseResponse.title === "" ?
                                     <Filler text="Transform your text effortlessly—choose a mode and let the magic happen!" />
                                     :
-                                    <div className="response">
-                                        <div><h3>{paraphraseResponse.title}</h3></div>
-                                        <p> <div className="summary-content" dangerouslySetInnerHTML={{ __html: formatText(paraphraseResponse.paraphrased) }} /></p>
-                                    </div>
+                                    <Response response={paraphraseResponse} title={paraphraseResponse.title}/>
+                                  
 
                             }
                         </div>

@@ -5,6 +5,7 @@ import { useGlobalContext } from "../../Context/GlobalContext"
 import '../Template/template.css'
 import "../Template/Prompt.css"
 import Top from '../top'
+import Response from '../Response';
 
 export default function Debate() {
     const { debatePrompt, setDebatePrompt, addDebate, debateResponse, formatText, loading } = useGlobalContext();
@@ -49,7 +50,7 @@ export default function Debate() {
         autoResizeTextarea();
     }, [debatePrompt.text]);
 
-    const { send_icon } = assets;
+    const { send_icon,loader } = assets;
 
     return (
         <div className='main tools'>
@@ -62,17 +63,12 @@ export default function Debate() {
                     </div>
                     <div className="inner-summ">
                         <div className="display">
-                            {loading === true ? "hello"
+                            {loading === true ? loader
                                 :
                                 debateResponse.title === "" ?
                                     <Filler text="State your position and get arguments that sway opinions." />
-                                    :
-                                    <div className="response">
-                                        <div><h3>{debateResponse.title}</h3></div>
-                                        <p>
-                                            <div className="summary-content" dangerouslySetInnerHTML={{ __html: formatText(debateResponse.content) }} />
-                                        </p>
-                                    </div>
+                                    :<Response response={debateResponse} title={debateResponse.title}/>
+                                    
                             }
                         </div>
                         <div className="Prompt">

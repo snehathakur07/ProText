@@ -5,6 +5,7 @@ import { useGlobalContext } from "../../Context/GlobalContext"
 import '../Template/template.css'
 import "../Template/Prompt.css"
 import Top from '../top'
+import Response from '../Response';
 
 export default function Essay() {
     const { essayPrompt, setEssayPrompt, addEssay, essayResponse, formatText, loading } = useGlobalContext();
@@ -48,7 +49,7 @@ export default function Essay() {
         autoResizeTextarea();
     }, [essayPrompt.text]);
 
-    const { send_icon } = assets;
+    const { send_icon,loader } = assets;
 
     return (
         <div className='main tools'>
@@ -61,17 +62,12 @@ export default function Essay() {
                     </div>
                     <div className="inner-summ">
                         <div className="display">
-                            {loading === true ? "hello"
+                            {loading === true ? loader
                                 :
                                 essayResponse.title === "" ?
                                     <Filler text="Submit your topic and get an essay that leaves a mark." />
                                     :
-                                    <div className="response">
-                                        <div><h3>{essayResponse.title}</h3></div>
-                                        <p>
-                                            <div className="summary-content" dangerouslySetInnerHTML={{ __html: formatText(essayResponse.content) }} />
-                                        </p>
-                                    </div>
+                                    <Response response={essayResponse} title={essayResponse.title} />
                             }
                         </div>
                         <div className="Prompt">

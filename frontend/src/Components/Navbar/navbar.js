@@ -4,7 +4,7 @@ import { assets } from '../../asset/asset';
 import { Link } from 'react-router-dom';
 
 export default function Navbar() {
-    const {  arrow_left, summary, paraphrase, spell, grammar, wordmean, article, essay, story, poem, play, debate } = assets;
+    const { arrow_left, summary, paraphrase, spell, grammar, wordmean, article, essay, story, poem, play, debate } = assets;
     const handleClick = () => {
         const nav = document.querySelector(".nav");
         nav.classList.add("minimize")
@@ -18,11 +18,6 @@ export default function Navbar() {
             <navbar>
                 <div className="btn-nav" onClick={handleClick}>{arrow_left}</div>
                 <div className="navbar-container">
-                    {/* <div className="top">
-                        <div className="logo"> <Link to='/'> <img src={logo} alt="logo" width="60" /> </Link> </div>
-                        <div className="name-top"><h3>ProText Studio</h3></div>
-                    </div> */}
-
                     <div className="menu">
                         <hr />
                         <div className="toolkit">
@@ -48,6 +43,11 @@ export default function Navbar() {
                                 <li onClick={handleClickMenu}>{play}<p><Link to='/play'>Plays</Link></p></li>
                                 <li onClick={handleClickMenu}>{debate}<p><Link to='/debate'>Debates</Link></p></li>
                             </ul>
+                        </div>
+                        <div className='history' >
+                            <div className="title"><span className="material-symbols-outlined">
+                                history
+                            </span>History</div>
                         </div>
 
                     </div>

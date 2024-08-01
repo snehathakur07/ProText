@@ -5,6 +5,7 @@ import { useGlobalContext } from "../../Context/GlobalContext"
 import '../Template/template.css'
 import "../Template/Prompt.css"
 import Top from '../top'
+import Response from '../Response';
 
 export default function Play() {
     const { playPrompt, setPlayPrompt, addPlay, playResponse, formatText, loading } = useGlobalContext();
@@ -48,7 +49,7 @@ export default function Play() {
         autoResizeTextarea();
     }, [playPrompt.text]);
 
-    const { send_icon } = assets;
+    const { send_icon,loader } = assets;
 
     return (
         <div className='main tools'>
@@ -61,17 +62,12 @@ export default function Play() {
                     </div>
                     <div className="inner-summ">
                         <div className="display">
-                            {loading === true ? "hello"
+                            {loading === true ? loader
                                 :
                                 playResponse.title === "" ?
                                     <Filler text="Describe your scene and get a script that captivates." />
                                     :
-                                    <div className="response">
-                                        <div><h3>{playResponse.title}</h3></div>
-                                        <p>
-                                            <div className="summary-content" dangerouslySetInnerHTML={{ __html: formatText(playResponse.content) }} />
-                                        </p>
-                                    </div>
+                                    <Response response={playResponse} title={playResponse.title} />
                             }
                         </div>
                         <div className="Prompt">

@@ -2,11 +2,16 @@ import runGrammarStyleChecks from "../gemini/toolkit/gemini-grammar-style.js"
 
 export const improveGrammarandStyle = async (req, res) => {
     const text = req.body.text;
-    const prompt = `Perform a grammar and style check on the following text. Provide concise suggestions for each and every grammatical mistake and improvement in clarity, coherence, and overall tone. Present your suggestions in bullet points, and provide them as if you are directly communicating with the user. Be brief but specific with each suggestion. For grammatical errors, point out each mistake and offer a specific suggestion for correction. For style or tone improvements, suggest specific changes to enhance the text.
-    Include an example that incorporates all of your suggestions into the given text. Don't include any title, neither in suggestions nor in example. Don't even say this "Grammar and Style Suggestions:"
-    The formatting, including spacing, highlights, bold phrases, etc., should be preserved. Provide suggestions regarding formatting as well.
-    Ensure that the example is not included in the suggestions.
-    Text: \n${text}`;
+    const prompt = `Perform a detailed grammar and style check on the following text. For each grammatical error, provide a concise explanation of the mistake and a specific suggestion for correction. For improvements in clarity, coherence, and overall tone, offer specific recommendations to enhance the text.
+
+Present your suggestions in the form of a list, making them clear and direct. Include any necessary corrections or enhancements to the text's formatting, spacing, and highlights.
+
+Additionally, provide an example of the revised text that incorporates all your suggestions. Do not include a title or any introductory phrases such as "Grammar and Style Suggestions:" in either the suggestions or the example.
+
+Ensure that the example is separate from the suggestions and that both suggestions and the example are included in the response.
+
+Text: \n${text}
+`;
 
 
     console.log(prompt)

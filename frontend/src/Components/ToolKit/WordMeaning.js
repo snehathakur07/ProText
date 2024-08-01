@@ -1,24 +1,22 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import Filler from "../../Template/Filler";
-import { assets } from "../../../asset/asset";
-import { useGlobalContext } from '../../../Context/GlobalContext';
-import '../../Template/template.css'
-import '../../Template/Prompt.css'
-import Top from '../../top'
+import Filler from "../Template/Filler";
+import { assets } from "../../asset/asset";
+import { useGlobalContext } from '../../Context/GlobalContext';
+import '../Template/template.css'
+import '../Template/Prompt.css'
+import Top from '../top'
+import Response from './wordResponse';
 
-export default function GrammarChecker() {
-    const { grammarCheckPrompt,
-        setGrammarCheckPrompt,
-        grammarCheckResponse,
-        addGrammarCheck, formatText, loading } = useGlobalContext();
+export default function WordMeaning() {
+    const { wordMeaningPrompt, setWordMeaningPrompt, addWordMeaning, wordMeaningResponse, loading } = useGlobalContext();
     const textareaRef = useRef(null);
 
+
     const handleTextChange = (event) => {
-        setGrammarCheckPrompt({ ...grammarCheckPrompt, text: event.target.value });
+        setWordMeaningPrompt({ ...wordMeaningPrompt, word: event.target.value });
         autoResizeTextarea();
     };
-
 
     const autoResizeTextarea = () => {
         const textarea = textareaRef.current;
@@ -30,8 +28,10 @@ export default function GrammarChecker() {
     };
 
     const handleSend = async () => {
-        await addGrammarCheck(grammarCheckPrompt);
-        
+        await addWordMeaning(wordMeaningPrompt);
+        setWordMeaningPrompt({
+            word:""
+        })
         resetTextareaHeight();
     };
 
@@ -45,37 +45,27 @@ export default function GrammarChecker() {
 
     useEffect(() => {
         autoResizeTextarea();
-    }, [grammarCheckPrompt.text]);
+    }, [wordMeaningPrompt.text]);
 
-    const { send_icon } = assets;
+    const { send_icon,loader } = assets;
 
     return (
-        <div className='main tools spell'>
+        <div className='main tools'>
             <div className="summarizer">
                 <div className="summarizer-con">
                     <Top/>
                     <div className="upper-summ">
-                        <div className="title-summ"><h1>Grammar & Style Checker </h1></div>
-                        <div className="sub-title-summ"><h3>Polish your Prose to Perfection</h3></div>
+                        <div className="title-summ"><h1>Word Meaning </h1></div>
+                        <div className="sub-title-summ"><h3>Unveil the Depths of Vocabulary !</h3></div>
                     </div>
                     <div className="inner-summ">
                         <div className="display">
-                            {loading === true ? "hello"
+                            {loading === true ? loader
                                 :
-                                (grammarCheckResponse.suggestions === "" && grammarCheckResponse.example==="") ?
-                                    <Filler text="Receive tailored suggestions and an improved version of your text for flawless writing." />
+                                wordMeaningResponse.word === "" ?
+                                    <Filler text="Enter a word/phrase to get its definition, synonyms, antonyms, and usage examples." />
                                     :
-                                    <div className="response">
-                                        <div><h3>Suggestions</h3></div>
-                                        <p>
-                                            <div className="summary-content" dangerouslySetInnerHTML={{ __html: formatText(grammarCheckResponse.suggestions) }} />
-                                        </p>
-                                        <div><h3>Example</h3></div>
-                                        <p>
-                                            <div className="summary-content" dangerouslySetInnerHTML={{ __html: formatText(grammarCheckResponse.example) }} />
-                                        </p>
-                                        
-                                    </div>
+                                    <Response/>
                             }
                         </div>
                         <div className="Prompt">
@@ -83,13 +73,14 @@ export default function GrammarChecker() {
                                 <div className="bar">
                                     <textarea
                                         id="text-input"
-                                        placeholder="Paste your text here"
+                                        placeholder="Enter a word or phrase"
                                         onChange={handleTextChange}
-                                        value={grammarCheckPrompt.text}
+                                        value={wordMeaningPrompt.word}
                                         ref={textareaRef}
                                         rows="1"
                                     ></textarea>
                                     <div className="btns" style={{ display: "flex !important" }}>
+
                                         <div className="btn" onClick={handleSend}>
                                         {send_icon} 
                                         </div>

@@ -8,8 +8,8 @@ export const Spellcheck = async (req, res) => {
     `
     console.log(prompt)
     try {
-        const response = await runSpellCheck(prompt); //--->raw response
-        const parsedResponse = JSON.parse(response) //--->parsed response
+        const response = await runSpellCheck(prompt); 
+        const parsedResponse = JSON.parse(response) 
         console.log(parsedResponse)
         if (parsedResponse) {
 

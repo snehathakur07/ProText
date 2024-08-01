@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Filler from "../../Template/Filler";
-import { assets } from "../../../asset/asset";
-import { useGlobalContext } from '../../../Context/GlobalContext';
-import '../../Template/template.css'
-import '../../Template/Prompt.css'
-import Top from '../../top'
+
+import Filler from "../Template/Filler";
+import { assets } from "../../asset/asset";
+import { useGlobalContext } from '../../Context/GlobalContext';
+import '../Template/template.css'
+import '../Template/Prompt.css'
+import Top from '../top'
+import Response from '../Response';
 
 export default function Summarizer() {
     const { summaryPrompt, setSummaryPrompt, addSummary, summaryResponse, formatText, loading, setLoading } = useGlobalContext();
@@ -48,7 +50,7 @@ export default function Summarizer() {
         autoResizeTextarea();
     }, [summaryPrompt.text]);
 
-    const { send_icon } = assets;
+    const { send_icon,loader } = assets;
 
     return (
         <div className='main tools'>
@@ -61,17 +63,13 @@ export default function Summarizer() {
                     </div>
                     <div className="inner-summ">
                         <div className="display">
-                            {loading === true ? "hello"
+                            {loading === true ? loader
                                 :
                                 summaryResponse.title === "" ?
                                     <Filler text="Summarize instantly : Paste your text and set your word limit." />
                                     :
-                                    <div className="response">
-                                        <div><h3>{summaryResponse.title}</h3></div>
-                                        <p>
-                                            <div className="summary-content" dangerouslySetInnerHTML={{ __html: formatText(summaryResponse.summary) }} />
-                                        </p>
-                                    </div>
+                                    <Response response={summaryResponse} title={summaryResponse.title}  />
+                                    
                             }
                         </div>
                         <div className="Prompt">

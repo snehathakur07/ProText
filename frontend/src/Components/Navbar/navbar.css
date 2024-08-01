@@ -160,3 +160,15 @@ hr {
 .creative-writing ul li {
   transition: background 1s ease;
 }
+.history .title{
+  display: flex;
+  justify-content: flex-end;
+  font-size:1.3rem;
+  align-items: center;
+  gap:.4rem;
+  cursor:pointer;
+  transition:all .2s ease-in-out;
+  &:hover{
+    font-size:1.5rem;
+  }
+}

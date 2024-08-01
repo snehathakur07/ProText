@@ -6,7 +6,7 @@ export const generateWriting = async (req, res) => {
     const context = req.body.context;
     const category = req.body.category;
     let prompt;
-    console.log(context,category)
+    console.log(context, category)
     if (category === 'Article' || category === 'Essay') {
         const wordCount = parseInt(req.body.wordLimit);
         prompt = `I want an ${category} on ${context} in ${wordCount} words (word count is important) and also provide a suitable title for it. Title must not exceed 100 characters. Consider breaking it down into sections or subtopics for better organization and readability.`;
@@ -25,40 +25,47 @@ export const generateWriting = async (req, res) => {
     else {
         const genre = req.body.genre;
         if (category === 'Play') {
-            const wordCount = parseInt(req.body.wordLimit);
-            prompt = `I want a play/skit. Context: "${context}" \nin ${wordCount} words (word count is important)and also provide a suitable title for it. Title must not exceed 100 characters. Specified Genre: ${genre}. Provide a proper introduction, dialogues and proper narration in between the scenes.`;
+            // const wordCount = parseInt(req.body.wordLimit);
+            prompt = `I want a play/skit. Context: "${context}" .\n also provide a suitable title for it. Title must not exceed 100 characters. Specified Genre: ${genre}. Provide a proper introduction, dialogues and proper narration in between the scenes.
+            It should be a complete story narration. Don't leave the story in the middle.`;
         }
         else {
             if (category === 'Poem') {
-                prompt = `I want a ${category} about ${context} and also provide a suitable title for it. Title must not exceed 100 characters. Specified Genre: ${genre}`;
+                prompt = `I want a ${category}. Context: ${context} \n Also provide a suitable title for it. Title must not exceed 100 characters. Specified Genre: ${genre}\n Give a proper formatted version of the poem. Should be properly indented.\nDon't make the poem too short or too long.\n`;
             }
             else {
                 const wordCount = parseInt(req.body.wordLimit);
-                prompt = `I want a ${category} about ${context} in ${wordCount} words (word count is important)and also provide a suitable title for it. Title must not exceed 100 characters. Specified Genre: ${genre}`;
+                prompt = `Please write a ${category} with the following details:
+                - Context: ${context}
+                - Word Count: at least or around ${wordCount} words (strict limit)
+                - Genre: ${genre}
+                Additionally, provide a title (within 100 characters) that captures the essence of the content. Make sure the tone aligns with the specified genre.
+                If the word limit is too low for it to be a story, adjust accordingly.
+                Must be properly formatted and indented. Use paragraphs wherever possible.`;
             }
         }
     }
-    prompt =prompt +"\n Do not include the main title in the content itself."
+    prompt = prompt + "\n Do not include the main title in the content itself, start content without the title. And complete the content. Don't leave it hanging."
     console.log(prompt)
     try {
         const response = await runContentGeneration(prompt); //--->raw response
         const parsedResponse = JSON.parse(response) //--->parsed response
         console.log(parsedResponse)
         if (parsedResponse) {
-            let title,content
-            if(parsedResponse.length===1){
+            let title, content
+            if (parsedResponse.length === 1) {
 
                 title = parsedResponse[0].title;
                 content = parsedResponse[0].content;
             }
             else {
-                content=parsedResponse[0].content
-                title=parsedResponse[1].title
+                content = parsedResponse[0].content
+                title = parsedResponse[1].title
             }
             const newContent = contentSchema({
                 title: title,
                 content: content,
-                category:category
+                category: category
             });
             console.log(newContent)
             // await newContent.save();

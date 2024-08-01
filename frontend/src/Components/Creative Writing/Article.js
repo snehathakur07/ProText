@@ -5,6 +5,7 @@ import { useGlobalContext } from "../../Context/GlobalContext"
 import '../Template/template.css'
 import "../Template/Prompt.css"
 import Top from '../top'
+import Response from "../Response"
 
 export default function Article() {
     const { articlePrompt, setArticlePrompt, addArticle, articleResponse, formatText, loading } = useGlobalContext();
@@ -48,7 +49,8 @@ export default function Article() {
         autoResizeTextarea();
     }, [articlePrompt.text]);
 
-    const { send_icon } = assets;
+    //  const formattedContent = formatText(articleResponse.content);
+    const { send_icon,loader } = assets;
 
     return (
         <div className='main tools'>
@@ -61,17 +63,12 @@ export default function Article() {
                     </div>
                     <div className="inner-summ">
                         <div className="display">
-                            {loading === true ? "hello"
+                            {loading === true ? loader
                                 :
                                 articleResponse.title === "" ?
                                     <Filler text="Share your topic and watch a compelling article come to life." />
                                     :
-                                    <div className="response">
-                                        <div><h3>{articleResponse.title}</h3></div>
-                                        <p>
-                                            <div className="summary-content" dangerouslySetInnerHTML={{ __html: formatText(articleResponse.content) }} />
-                                        </p>
-                                    </div>
+                                    <Response response={articleResponse} title={articleResponse.title}/>
                             }
                         </div>
                         <div className="Prompt">

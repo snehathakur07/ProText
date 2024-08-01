@@ -5,6 +5,7 @@ import { useGlobalContext } from "../../Context/GlobalContext"
 import '../Template/template.css'
 import "../Template/Prompt.css"
 import Top from '../top'
+import Response from '../Response';
 
 export default function Story() {
     const { storyPrompt, setStoryPrompt, addStory, storyResponse, formatText, loading } = useGlobalContext();
@@ -54,7 +55,7 @@ export default function Story() {
         autoResizeTextarea();
     }, [storyPrompt.text]);
 
-    const { send_icon } = assets;
+    const { send_icon, loader } = assets;
 
     return (
         <div className='main tools'>
@@ -66,18 +67,15 @@ export default function Story() {
                         <div className="sub-title-summ"><h3>Spin stories that enchant.</h3></div>
                     </div>
                     <div className="inner-summ">
-                        <div className="display">
-                            {loading === true ? "hello"
+                        <div className="display"
+
+                        >
+                            {loading === true ? loader
                                 :
                                 storyResponse.title === "" ?
                                     <Filler text="Input your idea and receive a tale that captivates." />
                                     :
-                                    <div className="response">
-                                        <div><h3>{storyResponse.title}</h3></div>
-                                        <p>
-                                            <div className="summary-content" dangerouslySetInnerHTML={{ __html: formatText(storyResponse.content) }} />
-                                        </p>
-                                    </div>
+                                    <Response response={storyResponse} title={storyResponse.title} />
                             }
                         </div>
                         <div className="Prompt">
@@ -116,17 +114,21 @@ export default function Story() {
                                         <div className="btn">
                                             <select name="word-limit" id="wordlimit" onChange={handleWordLimitChange} value={wordLimit}>
                                                 <option value="wordlimit" disabled>Word Limit</option>
-                                                <option value="50">&lt; 100</option>
-                                                <option value="100">100</option>
+                                                {/* <option value="50">&lt; 200</option> */}
+
                                                 <option value="200">200</option>
                                                 <option value="300">300</option>
                                                 <option value="400">400</option>
                                                 <option value="500">500</option>
-                                                <option value="750">&gt; 500</option>
+                                                <option value="600">600</option>
+                                                <option value="700">700</option>
+                                                <option value="800">800</option>
+                                                <option value="900">900</option>
+                                                <option value="1000">1000</option>
                                             </select>
                                         </div>
                                         <div className="btn" onClick={handleSend}>
-                                        {send_icon} 
+                                            {send_icon}
                                         </div>
                                     </div>
                                 </div>

@@ -3,9 +3,22 @@ import wordSchema from "../models/wordMeanings.js"
 
 export const generateWordMeaning = async (req, res) => {
     const wordToSearch = req.body.word;
-    const prompt = `Give the meaning of the word/phrase: "${wordToSearch}". Return the word(capitalize accordingly), meaning, exactly 5 synonyms, exactly 5 antonyms, and an example sentence. Give response only in the provided JSON format.
-    
-    `;
+    const prompt = `Give the detailed meaning of the word or phrase: "${wordToSearch}". Provide the following information in the exact JSON format below:
+
+    1. The word or phrase (with proper capitalization).
+    2. A brief and clear definition of the word or phrase.
+    3. Exactly 5 synonyms of the word or phrase.(synonyms can be phrases that have the same meaning as "${wordToSearch}")
+    4. Exactly 5 antonyms of the word or phrase.(synonyms can be phrases that have the opposite meaning as "${wordToSearch}")
+    5. An example sentence that illustrates the use of the word or phrase.
+
+    Ensure that the response is formatted as follows:
+    [{
+    "word": "Word or Phrase",
+    "meaning": "Definition",
+    "synonyms": ["synonym1", "synonym2", "synonym3", "synonym4", "synonym5"],
+    "antonyms": ["antonym1", "antonym2", "antonym3", "antonym4", "antonym5"],
+    "example": "Example sentence."
+}] `;
     console.log(prompt)
     try {
         const response = await runMeanings(prompt); //--->raw response

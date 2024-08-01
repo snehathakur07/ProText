@@ -1,19 +1,19 @@
 import React, { useEffect, useRef, useState } from 'react';
-import Filler from "../../Template/Filler";
-import { assets } from "../../../asset/asset";
-import { useGlobalContext } from '../../../Context/GlobalContext';
-import '../../Template/template.css'
-import '../../Template/Prompt.css'
-import Response from './Response';
-import Top from '../../top'
 
-export default function WordMeaning() {
-    const { wordMeaningPrompt, setwordMeaningPrompt, addWordMeaning, wordMeaningResponse, loading } = useGlobalContext();
+import Filler from "../Template/Filler";
+import { assets } from "../../asset/asset";
+import { useGlobalContext } from '../../Context/GlobalContext';
+import '../Template/template.css'
+import '../Template/Prompt.css'
+import Top from '../top'
+import Response from "../Response"
+
+export default function SpellChecker() {
+    const { spellCheckPrompt, setSpellCheckPrompt, addSpellCheck, spellCheckResponse, formatText, loading } = useGlobalContext();
     const textareaRef = useRef(null);
 
-
     const handleTextChange = (event) => {
-        setwordMeaningPrompt({ ...wordMeaningPrompt, word: event.target.value });
+        setSpellCheckPrompt({ ...spellCheckPrompt, text: event.target.value });
         autoResizeTextarea();
     };
 
@@ -27,10 +27,8 @@ export default function WordMeaning() {
     };
 
     const handleSend = async () => {
-        await addWordMeaning(wordMeaningPrompt);
-        setwordMeaningPrompt({
-            word:""
-        })
+        await addSpellCheck(spellCheckPrompt);
+        
         resetTextareaHeight();
     };
 
@@ -44,27 +42,27 @@ export default function WordMeaning() {
 
     useEffect(() => {
         autoResizeTextarea();
-    }, [wordMeaningPrompt.text]);
+    }, [spellCheckPrompt.text]);
 
-    const { send_icon } = assets;
+    const { send_icon,loader } = assets;
 
     return (
-        <div className='main tools'>
+        <div className='main tools spell'>
             <div className="summarizer">
                 <div className="summarizer-con">
                     <Top/>
                     <div className="upper-summ">
-                        <div className="title-summ"><h1>Word Meaning </h1></div>
-                        <div className="sub-title-summ"><h3>Unveil the Depths of Vocabulary !</h3></div>
+                        <div className="title-summ"><h1>SpellChecker </h1></div>
+                        <div className="sub-title-summ"><h3>Fix Typos and Misspellings Swiftly</h3></div>
                     </div>
                     <div className="inner-summ">
                         <div className="display">
-                            {loading === true ? "hello"
-                                :
-                                wordMeaningResponse.word === "" ?
-                                    <Filler text="Enter a word/phrase to get its definition, synonyms, antonyms, and usage examples." />
+                            {loading ? loader
+                                : spellCheckResponse.content === "" ?
+                                    <Filler text="Receive a polished version of your text, corrected for any spelling issues." />
                                     :
-                                    <Response/>
+                                    <Response response={spellCheckResponse} title="Corrected Version"/>
+                                    
                             }
                         </div>
                         <div className="Prompt">
@@ -72,16 +70,15 @@ export default function WordMeaning() {
                                 <div className="bar">
                                     <textarea
                                         id="text-input"
-                                        placeholder="Enter a word or phrase"
+                                        placeholder="Paste your text here"
                                         onChange={handleTextChange}
-                                        value={wordMeaningPrompt.word}
+                                        value={spellCheckPrompt.text}
                                         ref={textareaRef}
                                         rows="1"
                                     ></textarea>
                                     <div className="btns" style={{ display: "flex !important" }}>
-
                                         <div className="btn" onClick={handleSend}>
-                                        {send_icon} 
+                                            {send_icon}
                                         </div>
                                     </div>
                                 </div>
@@ -91,5 +88,5 @@ export default function WordMeaning() {
                 </div>
             </div>
         </div>
-    )
+    );
 }

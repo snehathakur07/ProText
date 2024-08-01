@@ -5,6 +5,7 @@ import { useGlobalContext } from "../../Context/GlobalContext"
 import '../Template/template.css'
 import "../Template/Prompt.css"
 import Top from '../top'
+import Response from '../Response';
 
 export default function Poem() {
     const { poemPrompt, setPoemPrompt, addPoem, poemResponse, formatText, loading } = useGlobalContext();
@@ -48,7 +49,7 @@ export default function Poem() {
         autoResizeTextarea();
     }, [poemPrompt.text]);
 
-    const { send_icon } = assets;
+    const { send_icon,loader } = assets;
 
     return (
         <div className='main tools'>
@@ -60,18 +61,15 @@ export default function Poem() {
                         <div className="sub-title-summ"><h3>Compose verses that resonate.</h3></div>
                     </div>
                     <div className="inner-summ">
-                        <div className="display">
-                            {loading === true ? "hello"
+                        <div className="display"
+                        style={{justifyContent:poemResponse.title !== "" ?'center':'flex-start'}}
+                        >
+                            {loading === true ? loader
                                 :
                                 poemResponse.title === "" ?
                                     <Filler text="Enter your theme and get a poem that speaks to the soul." />
                                     :
-                                    <div className="response">
-                                        <div><h3>{poemResponse.title}</h3></div>
-                                        <p>
-                                            <div className="summary-content" dangerouslySetInnerHTML={{ __html: formatText(poemResponse.content) }} />
-                                        </p>
-                                    </div>
+                                    <Response response={poemResponse} title={poemResponse.title} />
                             }
                         </div>
                         <div className="Prompt">

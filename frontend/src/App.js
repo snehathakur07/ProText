@@ -9,11 +9,11 @@ import {
   Routes
 } from "react-router-dom";
 import Features from './Components/Features/features';
-import Summarizer from './Components/ToolKit/Summarizer/Summarizer';
-import Paraphraser from './Components/ToolKit/Paraphraser/Paraphraser';
-import SpellChecker from './Components/ToolKit/Spell/SpellChecker';
-import GrammarChecker from './Components/ToolKit/Grammar/GrammarChecker';
-import WordMeaning from './Components/ToolKit/Word Meaning/WordMeaning';
+import Summarizer from './Components/ToolKit/Summarizer';
+import Paraphraser from './Components/ToolKit/Paraphraser';
+import SpellChecker from './Components/ToolKit/SpellChecker';
+import GrammarChecker from './Components/ToolKit/GrammarChecker';
+import WordMeaning from './Components/ToolKit/WordMeaning';
 import Article from './Components/Creative Writing/Article';
 import Essay from './Components/Creative Writing/Essay';
 import Story from './Components/Creative Writing/Story';

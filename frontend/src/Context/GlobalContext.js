@@ -1,12 +1,13 @@
 import React, { useContext, useState } from "react";
-import axios from "axios"
+import axios from "axios";
+
 const BASE_URL1 = "http://localhost:5000/api/writing-toolkit/";
 const BASE_URL2 = "http://localhost:5000/api/creative-writing/";
 
 const GlobalContext = React.createContext();
 
 export const GlobalProvider = ({ children }) => {
-    const [loading, setLoading] = useState(false)
+    const [loading, setLoading] = useState(false);
 
     const [summaryPrompt, setSummaryPrompt] = useState({
         text: "",
@@ -14,8 +15,24 @@ export const GlobalProvider = ({ children }) => {
     });
     const [summaryResponse, setSummaryResponse] = useState({
         title: "",
-        summary: ""
+        content: ""
     });
+    const addSummary = async (prompt) => {
+        setLoading(true);
+        setSummaryPrompt({ text: "", wordLimit: 0 });
+        try {
+            const response = await axios.post(`${BASE_URL1}summary`, prompt);
+            setSummaryResponse({
+                title: response.data.title,
+                content: response.data.summary
+            });
+            console.log(summaryResponse.content)
+        } catch (err) {
+            console.log(err);
+        }
+        setLoading(false);
+    };
+
 
 
     const [paraphrasePrompt, setParaphrasePrompt] = useState({
@@ -24,15 +41,44 @@ export const GlobalProvider = ({ children }) => {
     });
     const [paraphraseResponse, setParaphraseResponse] = useState({
         title: "",
-        paraphrased: ""
+        content: ""
     });
+    const addParaphrase = async (prompt) => {
+        setLoading(true);
+        setParaphrasePrompt({ text: "", mode: "Standard" });
+        try {
+            const response = await axios.post(`${BASE_URL1}paraphrase`, prompt);
+            setParaphraseResponse({
+                title: response.data.title,
+                content: response.data.paraphrased
+            });
+        } catch (err) {
+            console.log(err);
+        }
+        setLoading(false);
+    };
+
+
 
     const [spellCheckPrompt, setSpellCheckPrompt] = useState({
         text: ""
     });
     const [spellCheckResponse, setSpellCheckResponse] = useState({
-        corrected: ""
+        content: ""
     });
+    const addSpellCheck = async (prompt) => {
+        setLoading(true);
+        setSpellCheckPrompt({ text: "" });
+        try {
+            const response = await axios.post(`${BASE_URL1}spellcheck`, prompt);
+            console.log(response.data)
+            setSpellCheckResponse({ content: response.data});
+        } catch (err) {
+            console.log(err);
+        }
+        setLoading(false);
+    };
+
 
 
     const [grammarCheckPrompt, setGrammarCheckPrompt] = useState({ text: "" });
@@ -40,9 +86,26 @@ export const GlobalProvider = ({ children }) => {
         suggestions: "",
         example: ""
     });
+    const addGrammarCheck = async (prompt) => {
+        setLoading(true);
+        setGrammarCheckPrompt({ text: "" });
+        try {
+            const response = await axios.post(`${BASE_URL1}grammar-style`, prompt);
+            setGrammarCheckResponse({
+                suggestions: response.data.suggestions,
+                example: response.data.example
+            });
+            console.log(response.data)
+        } catch (err) {
+            console.log(err);
+        }
+        setLoading(false);
+    };
 
-    const [wordMeaningPrompt, setwordMeaningPrompt] = useState({ word: "" });
-    const [wordMeaningResponse, setwordMeaningResponse] = useState({
+
+
+    const [wordMeaningPrompt, setWordMeaningPrompt] = useState({ word: "" });
+    const [wordMeaningResponse, setWordMeaningResponse] = useState({
         word: "",
         meaning: "",
         synonyms: [],
@@ -50,329 +113,193 @@ export const GlobalProvider = ({ children }) => {
         example: ""
     });
 
-
-    const addSummary = async (prompt) => {
-        setLoading(true);
-        setSummaryPrompt({
-            text: "",
-            wordLimit: 0
-        })
-        const response = await axios.post(`${BASE_URL1}summary`, prompt)
-            .catch((err) => {
-                console.log(err)
-            })
-        setLoading(false)
-        setSummaryResponse({
-            title: response.data.title,
-            summary: response.data.summary
-        })
-        console.log(summaryResponse)
-    }
-
-    const addParaphrase = async (prompt) => {
-        setLoading(true);
-        setParaphrasePrompt({
-            text: "",
-            mode: "Standard"
-        })
-        const response = await axios.post(`${BASE_URL1}paraphrase`, prompt)
-            .catch((err) => {
-                console.log(err)
-            })
-        setLoading(false)
-        setParaphraseResponse({
-            title: response.data.title,
-            paraphrased: response.data.paraphrased
-        })
-        console.log(paraphrasePrompt)
-        // setRecentSummary({})
-        // console.log(response.data)
-        // setSummaryResponse(response.data)
-    }
-
-    const addSpellCheck = async (prompt) => {
-        setLoading(true);
-        setSpellCheckPrompt({
-            text: ""
-        })
-        const response = await axios.post(`${BASE_URL1}spellcheck`, prompt)
-            .catch((err) => {
-                console.log(err)
-            })
-        setLoading(false)
-        console.log(response)
-        console.log(response.data)
-        setSpellCheckResponse({
-            corrected: response.data
-        })
-        console.log(spellCheckResponse)
-    }
-    const addGrammarCheck = async (prompt) => {
-        setLoading(true);
-        setGrammarCheckPrompt({
-            text: ""
-        })
-        const response = await axios.post(`${BASE_URL1}grammar-style`, prompt)
-            .catch((err) => {
-                console.log(err)
-            })
-        setLoading(false)
-        console.log(response)
-        console.log(response.data)
-        setGrammarCheckResponse({
-            suggestions: response.data.suggestions,
-            example: response.data.example
-        })
-        console.log(grammarCheckResponse)
-    }
-
     const addWordMeaning = async (prompt) => {
         setLoading(true);
-        setwordMeaningPrompt({
-            word: ""
-        })
-        const response = await axios.post(`${BASE_URL1}word-meaning`, prompt)
-            .catch((err) => {
-                console.log(err)
-            })
+        setWordMeaningPrompt({ word: "" });
+        try {
+            const response = await axios.post(`${BASE_URL1}word-meaning`, prompt);
+            setWordMeaningResponse({
+                word: response.data.word,
+                meaning: response.data.meaning,
+                antonyms: response.data.antonyms,
+                synonyms: response.data.synonyms,
+                example: response.data.example
+            });
+        } catch (err) {
+            console.log(err);
+        }
         setLoading(false);
-        console.log(response.data)
-        setwordMeaningResponse({
-            word: response.data.word,
-            meaning: response.data.meaning,
-            antonyms: response.data.antonyms,
-            synonyms: response.data.synonyms,
-            example: response.data.example
-        })
-        console.log(wordMeaningResponse)
-
-    }
-
-
-
-
+    };
 
     const [articlePrompt, setArticlePrompt] = useState({
         category: "Article",
         context: "",
         wordLimit: ""
-    })
+    });
     const [articleResponse, setArticleResponse] = useState({
         title: "",
         content: ""
-    })
+    });
 
     const addArticle = async (prompt) => {
-        console.log("article")
         setLoading(true);
-        setArticlePrompt({
-            category: "Article",
-            context: "",
-            wordLimit: ""
-        })
-        const response = await axios.post(`${BASE_URL2}`, prompt)
-            .catch((err) => {
-                console.log(err)
-            })
+        setArticlePrompt({ category: "Article", context: "", wordLimit: "" });
+        try {
+            const response = await axios.post(`${BASE_URL2}`, prompt);
+            setArticleResponse({
+                title: response.data.title,
+                content: response.data.content
+            });
+        } catch (err) {
+            console.log(err);
+        }
         setLoading(false);
-        console.log(response.data)
-        setArticleResponse({
-            title: response.data.title,
-            content: response.data.content
-        })
-        console.log(articleResponse)
-
-    }
-
+    };
 
     const [essayPrompt, setEssayPrompt] = useState({
         category: "Essay",
         context: "",
         wordLimit: ""
-    })
+    });
     const [essayResponse, setEssayResponse] = useState({
         title: "",
         content: ""
-    })
+    });
 
     const addEssay = async (prompt) => {
         setLoading(true);
-        setEssayPrompt({
-            category: "Essay",
-            context: "",
-            wordLimit: ""
-        })
-        const response = await axios.post(`${BASE_URL2}`, prompt)
-            .catch((err) => {
-                console.log(err)
-            })
+        setEssayPrompt({ category: "Essay", context: "", wordLimit: "" });
+        try {
+            const response = await axios.post(`${BASE_URL2}`, prompt);
+            setEssayResponse({
+                title: response.data.title,
+                content: response.data.content
+            });
+        } catch (err) {
+            console.log(err);
+        }
         setLoading(false);
-        console.log(response.data)
-        setEssayResponse({
-            title: response.data.title,
-            content: response.data.content
-        })
-        console.log(essayResponse)
-
-    }
-
-
+    };
 
     const [storyPrompt, setStoryPrompt] = useState({
         category: "Story",
         context: "",
         wordLimit: "",
-        genre:""
-    })
+        genre: ""
+    });
     const [storyResponse, setStoryResponse] = useState({
         title: "",
         content: ""
-    })
+    });
 
     const addStory = async (prompt) => {
         setLoading(true);
-        setStoryPrompt({
-            category: "Story",
-            context: "",
-            wordLimit: "",
-            genre:""
-        })
-        const response = await axios.post(`${BASE_URL2}`, prompt)
-            .catch((err) => {
-                console.log(err)
-            })
+        setStoryPrompt({ category: "Story", context: "", wordLimit: "", genre: "" });
+        try {
+            const response = await axios.post(`${BASE_URL2}`, prompt);
+            setStoryResponse({
+                title: response.data.title,
+                content: response.data.content
+            });
+        } catch (err) {
+            console.log(err);
+        }
         setLoading(false);
-        console.log(response.data)
-        setStoryResponse({
-            title: response.data.title,
-            content: response.data.content
-        })
-        console.log(storyResponse)
-
-    }
-
-
+    };
 
     const [poemPrompt, setPoemPrompt] = useState({
         category: "Poem",
         context: "",
-        genre:""
-    })
+        genre: ""
+    });
     const [poemResponse, setPoemResponse] = useState({
         title: "",
         content: ""
-    })
+    });
 
     const addPoem = async (prompt) => {
         setLoading(true);
-        setPoemPrompt({
-            category: "Poem",
-            context: "",
-            genre:""
-        })
-        const response = await axios.post(`${BASE_URL2}`, prompt)
-            .catch((err) => {
-                console.log(err)
-            })
+        setPoemPrompt({ category: "Poem", context: "", genre: "" });
+        try {
+            const response = await axios.post(`${BASE_URL2}`, prompt);
+            setPoemResponse({
+                title: response.data.title,
+                content: response.data.content
+            });
+        } catch (err) {
+            console.log(err);
+        }
         setLoading(false);
-        console.log(response.data)
-        setPoemResponse({
-            title: response.data.title,
-            content: response.data.content
-        })
-        console.log(poemResponse)
-
-    }
-
-
+    };
 
     const [playPrompt, setPlayPrompt] = useState({
-        category: "Poem",
+        category: "Play",
         context: "",
-        genre:""
-    })
+        genre: ""
+    });
     const [playResponse, setPlayResponse] = useState({
         title: "",
         content: ""
-    })
+    });
 
     const addPlay = async (prompt) => {
         setLoading(true);
-        setPlayPrompt({
-            category: "Play",
-            context: "",
-            genre:""
-        })
-        const response = await axios.post(`${BASE_URL2}`, prompt)
-            .catch((err) => {
-                console.log(err)
-            })
+        setPlayPrompt({ category: "Play", context: "", genre: "" });
+        try {
+            const response = await axios.post(`${BASE_URL2}`, prompt);
+            setPlayResponse({
+                title: response.data.title,
+                content: response.data.content
+            });
+        } catch (err) {
+            console.log(err);
+        }
         setLoading(false);
-        console.log(response.data)
-        setPlayResponse({
-            title: response.data.title,
-            content: response.data.content
-        })
-        console.log(playResponse)
-
-    }
-
-
+    };
 
     const [debatePrompt, setDebatePrompt] = useState({
         category: "Debate",
         context: "",
-        genre:"",
-        motion:""
-    })
+        genre: "",
+        motion: ""
+    });
     const [debateResponse, setDebateResponse] = useState({
         title: "",
         content: ""
-    })
+    });
 
     const addDebate = async (prompt) => {
         setLoading(true);
-        setDebatePrompt({
-            category: "Debate",
-            context: "",
-            genre:"",
-            motion:""
-        })
-        const response = await axios.post(`${BASE_URL2}`, prompt)
-            .catch((err) => {
-                console.log(err)
-            })
+        setDebatePrompt({ category: "Debate", context: "", genre: "", motion: "" });
+        try {
+            const response = await axios.post(`${BASE_URL2}`, prompt);
+            setDebateResponse({
+                title: response.data.title,
+                content: response.data.content
+            });
+        } catch (err) {
+            console.log(err);
+        }
         setLoading(false);
-        console.log(response.data)
-        setDebateResponse({
-            title: response.data.title,
-            content: response.data.content
-        })
-        console.log(debateResponse)
-
-    }
-
+    };
 
     const formatText = (text) => {
         if (!text) return "";
-        let formattedText = text.replace(/\n/g, '<br/>');
-        formattedText = formattedText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>'); // Bold text
-        formattedText = formattedText.replace(/\*/g, '<br/>'); // Line breaks
-        formattedText = formattedText.replace(/(\+ .+)/g, '<li>$1</li>'); // List items
-        formattedText = formattedText.replace(/(<li>.*<\/li>)/g, '<ul>$1</ul>'); // Wrap list items in <ul>
-        formattedText = formattedText.replace(/<\/ul>\s*<ul>/g, ''); // Merge consecutive <ul> elements
-    
-        // Add formatting for headers
-        formattedText = formattedText.replace(/### (.*?)<br\/>/g, '<h3>$1</h3>'); // H3 headers
-        formattedText = formattedText.replace(/## (.*?)<br\/>/g, '<h2>$1</h2>'); // H2 headers
-        formattedText = formattedText.replace(/# (.*?)<br\/>/g, '<h1>$1</h1>'); // H1 headers
-    
+
+        let formattedText = text
+            .replace(/\n/g, '<br/>')
+            .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>') // Bold text
+            .replace(/\*/g, '<br/>') // Line breaks
+            .replace(/(\+ .+)/g, '<li>$1</li>') // List items
+            .replace(/(<li>.*<\/li>)/g, '<ul>$1</ul>') // Wrap list items in <ul>
+            .replace(/<\/ul>\s*<ul>/g, '') // Merge consecutive <ul> elements
+            .replace(/### (.*?)<br\/>/g, '<h3>$1</h3>') // H3 headers
+            .replace(/## (.*?)<br\/>/g, '<h2>$1</h2>') // H2 headers
+            .replace(/# (.*?)<br\/>/g, '<h1>$1</h1>'); // H1 headers
+
+        // console.log(form)
         return formattedText;
     };
-    
-
-
-
 
     return (
         <GlobalContext.Provider value={{
@@ -388,57 +315,58 @@ export const GlobalProvider = ({ children }) => {
 
             spellCheckPrompt,
             setSpellCheckPrompt,
-            spellCheckResponse,
             addSpellCheck,
+            spellCheckResponse,
 
             grammarCheckPrompt,
             setGrammarCheckPrompt,
-            grammarCheckResponse,
             addGrammarCheck,
+            grammarCheckResponse,
 
             wordMeaningPrompt,
-            setwordMeaningPrompt,
-            wordMeaningResponse,
+            setWordMeaningPrompt,
             addWordMeaning,
+            wordMeaningResponse,
 
             articlePrompt,
             setArticlePrompt,
-            articleResponse,
             addArticle,
+            articleResponse,
 
             essayPrompt,
             setEssayPrompt,
-            essayResponse,
             addEssay,
+            essayResponse,
 
             storyPrompt,
             setStoryPrompt,
-            storyResponse,
             addStory,
+            storyResponse,
 
             poemPrompt,
             setPoemPrompt,
-            poemResponse,
             addPoem,
+            poemResponse,
 
             playPrompt,
             setPlayPrompt,
-            playResponse,
             addPlay,
+            playResponse,
 
             debatePrompt,
             setDebatePrompt,
-            debateResponse,
             addDebate,
+            debateResponse,
 
             formatText,
             loading,
             setLoading
-        }}>{children}</GlobalContext.Provider>
+        }}>
+            {children}
+        </GlobalContext.Provider>
     );
-}
-
+};
 
 export const useGlobalContext = () => {
-    return useContext(GlobalContext)
-}
+    return useContext(GlobalContext);
+};

@@ -1,11 +1,10 @@
 import logo from './logoo.jpeg'
-// import send_icon from './send_icon.png'
-import bot from './bot.png'
-import hands from './hands.jpeg'
-import bg from './bg.png'
-const send_icon=<span class="material-symbols-outlined">
-send
+import spinner from './spinner.gif'
+
+const send_icon = <span class="material-symbols-outlined">
+    send
 </span>
+
 
 const arrow_left = <span className="material-symbols-outlined">
     arrow_circle_left
@@ -16,8 +15,8 @@ const summary = <span className="material-symbols-outlined">
 const paraphrase = <span className="material-symbols-outlined">
     edit_note
 </span>
-const spell=<span className="material-symbols-outlined">
-spellcheck
+const spell = <span className="material-symbols-outlined">
+    spellcheck
 </span>
 const grammar = <span className="material-symbols-outlined">
     rule
@@ -44,6 +43,10 @@ const debate = <span className="material-symbols-outlined">
     record_voice_over
 </span>
 
+const loader = <span className='spinner'>
+    <img src={spinner} alt='spinner' />
+</span>
+
 export const assets = {
     arrow_left,
     summary,
@@ -58,8 +61,7 @@ export const assets = {
     play,
     debate,
     send_icon,
-    bot,
-    hands,
     logo,
-    bg
+
+    loader
 }

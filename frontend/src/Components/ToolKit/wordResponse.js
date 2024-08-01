@@ -1,5 +1,5 @@
 import React from 'react';
-import { useGlobalContext } from '../../../Context/GlobalContext';
+import { useGlobalContext } from '../../Context/GlobalContext';
 
 export default function Response() {
     const { wordMeaningResponse, formatText } = useGlobalContext();
